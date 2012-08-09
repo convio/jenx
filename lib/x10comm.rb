@@ -43,6 +43,7 @@ module CIComm
 
     def xdim(device_name = @current_device, value)
       raise "xdim value must be between 0 and 255" unless (0..255) === value
+      x10_send(device_name.to_sym, :xdim, value)
     end
 
     def all_off
@@ -59,8 +60,8 @@ module CIComm
 
     def x10_send(device_name, op, val="")
       x10_open
+      @session.puts "st 0" #clear interface status memory -- needed to initialize lights
       @session.puts "#@transmit_cmd #{@device[device_name].join} #{op} #{val}"
-      sleep(0.5)
       x10_close
     end
 

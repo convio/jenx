@@ -1,0 +1,13 @@
+#This file is used to set the names and house and unit codes of X10 devices
+#use this format:
+#name: HouseUnit
+#ie
+# :somedevice: B3
+#
+#case matters for names, not for house codes
+
+#:hostname: 172.20.5.117
+
+:devices:
+  :failing: A1
+  :passing: A2

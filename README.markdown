@@ -131,7 +131,7 @@ Ok that's all fine and good, you say, but how do we *keep* the lights updated? W
     00 08 * * 1-5 /path/to/script.sh
     ```
 
-    * This runs the script from 8AM to 6PM monday through friday
+    * This starts the script at 8AM monday through friday. The script stops running after 10 hours, so effectively this updates the devices form 8AM to 6PM monday to friday.
 * **Pushing**
     * Simply add this project as a jenkins job and use build triggers to run it after your watched builds complete. Set the job to run bash or batch commands, and tell it to cd to the bin directory and run ```ruby update_device.rb url-of-view-or-job```. This way the lights are updated right before or after a build. On the upstream project, configure it to execute the script even if the build fails, otherwise you'll never communicate a failing status to your lights.
 

@@ -52,6 +52,9 @@ end
 def on_failing
   @transmitter.off :passing
   @transmitter.on :failing
+  sleep(7)
+  @transmitter.off :failing
+  sleep(3)
 end
 
 alias :on_failing_in_progress :on_failing

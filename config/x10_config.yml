@@ -1,12 +1,17 @@
 #This file is used to set the names and house and unit codes of X10 devices
-#use this format:
-#name: HouseUnit
-#ie
-# :somedevice: B3
+#use this format for devices:
+#:devices:
+#  :firstdevicename: A5
+#  :anotherdevice: B1
+#  :alarm: B2
 #
 #case matters for names, not for house codes
-
-#:hostname: 172.20.5.117
+#
+# available options:
+# :hostname # ip/hostname of mochad server (default localhost)
+# :hostport # port of mochad server (default 1099)
+# :rf       # set true to use radiofrency, set false to use powerline (default true)
+# :devices  # list the device nicknames and locations
 
 :devices:
   :failing: A1

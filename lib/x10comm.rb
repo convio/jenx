@@ -24,26 +24,26 @@ module CIComm
     end
 
     def on(device_name = @current_device)
-      x10_send(device_name.to_sym, :on)
+      x10_send(device_name.to_sym, "on")
     end
 
     def off(device_name = @current_device)
-      x10_send(device_name.to_sym, :off)
+      x10_send(device_name.to_sym, "off")
     end
 
     def dim(device_name = @current_device, value)
       raise "dim value must be between 0 and 31" unless (0..31) === value
-      x10_send(device_name.to_sym, :dim, value)
+      x10_send(device_name.to_sym, "dim", value)
     end
 
     def bright(device_name = @current_device, value)
       raise "bright value must be between 0 and 31" unless (0..31) === value
-      x10_send(device_name.to_sym, :bright, value)
+      x10_send(device_name.to_sym, "bright", value)
     end
 
     def xdim(device_name = @current_device, value)
       raise "xdim value must be between 0 and 255" unless (0..255) === value
-      x10_send(device_name.to_sym, :xdim, value)
+      x10_send(device_name.to_sym, "xdim", value)
     end
 
     def all_off
@@ -60,9 +60,9 @@ module CIComm
 
     def x10_send(device_name, op, val="")
       x10_open
-      @session.puts "st 0" #clear interface status memory -- needed to initialize lights
       @session.puts "#@transmit_cmd #{@device[device_name].join} #{op} #{val}"
       x10_close
+      sleep(1)
     end
 
     def x10_open

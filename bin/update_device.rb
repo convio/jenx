@@ -2,6 +2,7 @@
 require_relative '../lib/ci_comm'
 require_relative '../bin/x10_util'
 
+
 def get_status(job)
   case job.color
     when /blue\z/
@@ -26,9 +27,17 @@ def get_status(job)
   end
 end
 
+@config = load_config
+@transmitter = CIComm::X10.new(@config[:devices], @config[:hostname], @config[:hostport], @config[:rf])
+
 if ARGV.empty?
   raise "No jenkins view or job url specified"
 else
+  if ARGV.first =~ /all_off/
+    puts "turning off all lights"
+    @transmitter.all_off
+    exit
+  end
   jenkins = CIComm::Jenkins.get_resource(ARGV.join(" "))
   puts jenkins.name
 end
@@ -48,8 +57,6 @@ else
   raise "URL not recognized or Jenkins is down. Aborting"
 end
 
-@config = load_config
-@transmitter = CIComm::X10.new(@config[:devices], @config[:hostname], @config[:hostport], @config[:rf])
 
 puts "overall: #{@overall_status}"
 send("on_#@overall_status")

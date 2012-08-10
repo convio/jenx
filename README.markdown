@@ -31,7 +31,7 @@ This section explains how to get up and running with your setup. Note that this 
 To communicate with a USB-connected X10 Firecracker controller on linux, you need to **download and install** [mochad](https://github.com/njh/mochad). The instructions provided on its github and sourceforge page should be enough guidance to do so. Check the README for manual operating instructions (though you won't explicitly need to use them for our purposes)
 
 #### On a VM
-If you are running in a virtual machine, you *may* also need the windows Firecracker [software](ftp://ftp.x10.com/pub/applications/firecracker/xfire.exe) (this should include the drivers). If it doesn't work after restarting your computer, try drivers from [here](http://www.x10.com/support/support_soft1.htm)
+If you are running in a virtual machine, you *may* also need the windows Firecracker [software](http://ftp.x10.com/pub/applications/firecracker/xfire.exe) (this should include the drivers). If it doesn't work after restarting your computer, try drivers from [here](http://www.x10.com/support/support_soft1.htm)
 
 If you are running in Oracle VirtualBox, you also need to install the Oracle VirtualBox Extension Pack for your specific version to enable USB 2.0 support, and you need to add USB filters for the plugged in X10 device in settings for your virtual machine.
 

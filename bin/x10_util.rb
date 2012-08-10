@@ -44,15 +44,15 @@ end
 def on_passing_in_progress
   @transmitter.off :failing
   @transmitter.off :passing
-  sleep(3)
+  sleep(2)
   @transmitter.on :passing
-  sleep(7)
+  sleep(2)
 end
 
 def on_failing
   @transmitter.off :passing
   @transmitter.off :failing
-  sleep(3)
+  sleep(7)
   @transmitter.on :failing
   sleep(7)
 end

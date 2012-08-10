@@ -85,7 +85,7 @@ If the transmitter is not blinking when you send commands (or netcat doesn't com
 X10 related problems go beyond the scope of this project, so consult another resource for help with x10 configuration.
 
 ### The Software
-Clone this project. First, configure anything you need in ```config/x10_config.yml```. The default settings should work when running on the same computer as mochad. Then, go to the bin/ directory, and run ```ruby feedback_device.rb URL_TO_JENKINS_JOB_or_VIEW```. That's it, your lights should now have been updated.
+Clone this project. First, configure anything you need in ```config/x10_config.yml```. The default settings should work when running on the same computer as mochad. Then, go to the bin/ directory, and run ```ruby update_device.rb URL_TO_JENKINS_JOB_or_VIEW```. That's it, your lights should now have been updated.
 
 #### Other configurations
 Ok that's all fine and good, you say, but how do we *keep* the lights updated? We don't want to have to manually run the script every time a job builds. Onward, I describe how I configured polling and pushing for my project.
@@ -96,7 +96,7 @@ Ok that's all fine and good, you say, but how do we *keep* the lights updated? W
     ```
     #!/bin/bash
     cd /home/myname/path/to/jenx/bin/
-    ruby_cmd="ruby feedback_device.rb http://url.of/jenkins/view/or/job"
+    ruby_cmd="ruby update_device.rb http://url.of/jenkins/view/or/job"
     cmd="watch -n 5 $ruby_cmd"
     $cmd
     ```
@@ -109,13 +109,13 @@ Ok that's all fine and good, you say, but how do we *keep* the lights updated? W
 
     * This runs the script from 8AM to 6PM monday through friday
 * **Pushing**
-    * Simply add this project as a jenkins job and use build triggers to run it after your watched builds complete. Set the job to run bash or batch commands, and tell it to cd to the bin directory and run ```ruby feedback_device.rb url-of-view-or-job```. This way the lights are updated right before or after a build. On the upstream project, configure it to execute the script even if the build fails, otherwise you'll never communicate a failing status to your lights.
+    * Simply add this project as a jenkins job and use build triggers to run it after your watched builds complete. Set the job to run bash or batch commands, and tell it to cd to the bin directory and run ```ruby update_device.rb url-of-view-or-job```. This way the lights are updated right before or after a build. On the upstream project, configure it to execute the script even if the build fails, otherwise you'll never communicate a failing status to your lights.
 
 Extend
 ------
 The logic for receiving build statuses and turning them into X10 commands is stored in ```bin/x10_util.rb``` which uses ```lib/x10comm.rb``` to deal with the direct mochad commands. When a failing status is received, on_failing is called, when passing, on_passing is called. Add more per you preference and your jenkins configuration.
 
-The logic for getting statuses from Jenkins URLs is handled in ```bin/feedback_device.rb```, which uses ```lib/ci_comm.rb``` to objectify and navigate through Jenkins responses. Here you define exactly what information it is you're fetching from jenkins, and what information you're passing to x10_util.rb. You are actually not limited to job colors and build statuses-- you could extend this to handle any part of a Jenkins view, job, build, and configuration and then just add methods in x10_util to handle to arguments passed to it.
+The logic for getting statuses from Jenkins URLs is handled in ```bin/update_device.rb```, which uses ```lib/ci_comm.rb``` to objectify and navigate through Jenkins responses. Here you define exactly what information it is you're fetching from jenkins, and what information you're passing to x10_util.rb. You are actually not limited to job colors and build statuses-- you could extend this to handle any part of a Jenkins view, job, build, and configuration and then just add methods in x10_util to handle to arguments passed to it.
 
 ### TODO
 * Add tracking of previous status

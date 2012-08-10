@@ -95,16 +95,40 @@ Ok that's all fine and good, you say, but how do we *keep* the lights updated? W
 
     ```
     #!/bin/bash
-    cd /home/myname/path/to/jenx/bin/
-    ruby_cmd="ruby update_device.rb http://url.of/jenkins/view/or/job"
-    cmd="watch -n 5 $ruby_cmd"
+
+    # we have to cd into the bin directory
+    cd /path/to/jenx/bin/
+
+    # number of seconds to run the script for
+    run_for=36000
+
+    # number of seconds between each poll
+    poll_every=5
+
+    # url of job or view
+    url="http://jenkins/view/or/job/url"
+
+    # command to get the status and update the devices"
+    ruby_cmd="ruby update_device.rb $url"
+
+    # command to run the above every $poll_every seconds
+    watch_cmd="watch -n $poll_every $ruby_cmd"
+
+    # command to stop updating the devices after a period of time
+    cmd="timelimit -t$run_for -T$run_for $watch_cmd"
+
+    # execute it
     $cmd
+
+    # after it finishes, we need to turn off the lights
+    turn_off="ruby update_device.rb all_off"
+    $turn_off
     ```
 
     * If you run this at work or for others to monitor, I recommend getting the timelimit application to automatically turn off the lights after some time (to prevent overheating). (On Ubuntu: ```sudo apt-get install timelimit```). Set your crontab to run the above script when you want it to turn on. Type ```crontab -e``` and add the following line
 
     ```
-    00 08 * * 1-5 timelimit -t36000 -T36000 /path/to/script.sh
+    00 08 * * 1-5 /path/to/script.sh
     ```
 
     * This runs the script from 8AM to 6PM monday through friday

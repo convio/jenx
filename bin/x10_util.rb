@@ -43,25 +43,28 @@ end
 
 def on_passing_in_progress
   @transmitter.off :failing
-  @transmitter.on :passing
-  sleep(7)
   @transmitter.off :passing
   sleep(3)
+  @transmitter.on :passing
+  sleep(7)
 end
 
 def on_failing
   @transmitter.off :passing
-  @transmitter.on :failing
-  sleep(7)
   @transmitter.off :failing
   sleep(3)
+  @transmitter.on :failing
+  sleep(7)
 end
 
-alias :on_failing_in_progress :on_failing
+def on_failing_in_progress
+  @transmitter.off :passing
+  @transmitter.on :failing
+end
 
-alias :on_aborted :on_failing
+alias :on_aborted :on_failing_in_progress
 
-alias :on_aborted_in_progress :on_failing
+alias :on_aborted_in_progress :on_failing_in_progress
 
 def on_unknown
   @transmitter.all_on

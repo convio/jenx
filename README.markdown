@@ -6,7 +6,7 @@ About
 
 JenX powers the network-controlled jenkins build feedback device (nicknamed *Isengard*) for the Convio engineering department. This readme describes all stages of the process required to build and run a similar device.
 
-JenX is written in ruby, and extends CIComm -- an in-house library we wrote to get reports on jenkins views, jobs, and builds. The X10 libraries/utilities communicate to a computer running [mochad](https://github.com/njh/mochad), which handles driving the X10 computer interface.
+JenX is written in ruby, and extends CIComm (thanks, [abaird](https://github.com/abaird)-- an in-house library we wrote to get reports on jenkins views, jobs, and builds. The X10 libraries/utilities communicate to a computer running [mochad](https://github.com/njh/mochad), which handles driving the X10 computer interface.
 
 The feedback device is modular enough to be used to either poll Jenkins periodically or to run off of jenkins itself and command the lights upon a build starting/running/ending.
 

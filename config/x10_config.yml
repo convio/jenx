@@ -13,6 +13,10 @@
 # :rf       # set true to use radiofrency, set false to use powerline (default true)
 # :devices  # list the device nicknames and locations
 
-:devices:
-  :failing: A1
-  :passing: A2
+:hostname: localhost
+
+:urls:
+  - http://build2.corp.convio.com/user/bjonica/my-views/view/Build Feedback Device:
+    :devices:
+      :passing: A2
+      :failing: A1

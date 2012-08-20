@@ -4,7 +4,12 @@ require_relative '../lib/x10comm'
 
 def load_config
   config_file = File.read("../config/x10_config.yml")
-  defaults.merge YAML.load(config_file)
+  yaml = YAML.load(config_file)
+  @config = defaults.merge(yaml)
+  @hostname = @config[:hostname]
+  @hostport = @config[:hostport]
+  @urls = @config[:urls]
+  @rf = @config[:rf]
 end
 
 def defaults

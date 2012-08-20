@@ -11,8 +11,13 @@
 # :hostname # ip/hostname of mochad server (default localhost)
 # :hostport # port of mochad server (default 1099)
 # :rf       # set true to use radiofrency, set false to use powerline (default true)
+# :urls     # the urls to read statuses from
 # :devices  # list the device nicknames and locations
 
-:devices:
-  :failing: A1
-  :passing: A2
+:hostname: localhost
+
+:urls:
+  - http://path/to/jenkins/view/or/job:
+    :devices:
+      :passing: A2
+      :failing: A1

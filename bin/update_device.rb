@@ -28,35 +28,26 @@ def get_status(job)
 end
 
 @config = load_config
-@transmitter = CIComm::X10.new(@config[:devices], @config[:hostname], @config[:hostport], @config[:rf])
 
-if ARGV.empty?
-  raise "No jenkins view or job url specified"
-else
-  if ARGV.first =~ /all_off/
-    puts "turning off all lights"
-    @transmitter.all_off
-    exit
+@urls.each do |url|
+  @transmitter = CIComm::X10.new(url[:devices], @hostname, @hostport, @rf)
+  jenkins = CIComm::Jenkins.get_resource(url.keys.first)
+
+  if jenkins.is_a? CIComm::Jenkins::Job
+    @overall_status = get_status(jenkins)
+  elsif jenkins.is_a? CIComm::Jenkins::View
+    jenkins.jobs.reject do |job|
+      true if job.name =~ /Build Feedback Device/ or job.name =~ /\A__/
+    end.each do |job|
+      current_status = get_status(job)
+      @overall_status = "failing" if current_status !=~ /passing/
+      puts "#{current_status.capitalize}:  #{job.name}"
+    end
+    @overall_status ||= "passing"
+  else
+    raise "URL not recognized or Jenkins is down. Aborting"
   end
-  jenkins = CIComm::Jenkins.get_resource(ARGV.join(" "))
-  puts jenkins.name
+
+  puts "overall: #{@overall_status}"
+  send("on_#@overall_status")
 end
-
-if jenkins.is_a? CIComm::Jenkins::Job
-  @overall_status = get_status(jenkins)
-elsif jenkins.is_a? CIComm::Jenkins::View
-  jenkins.jobs.reject do |job|
-    true if job.name =~ /Build Feedback Device/ or job.name =~ /\A__/
-  end.each do |job|
-    current_status = get_status(job)
-    @overall_status = "failing" if current_status !=~ /passing/
-    puts "#{current_status.capitalize}:  #{job.name}"
-  end
-  @overall_status ||= "passing"
-else
-  raise "URL not recognized or Jenkins is down. Aborting"
-end
-
-
-puts "overall: #{@overall_status}"
-send("on_#@overall_status")

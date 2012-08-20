@@ -11,12 +11,13 @@
 # :hostname # ip/hostname of mochad server (default localhost)
 # :hostport # port of mochad server (default 1099)
 # :rf       # set true to use radiofrency, set false to use powerline (default true)
+# :urls     # the urls to read statuses from
 # :devices  # list the device nicknames and locations
 
 :hostname: localhost
 
 :urls:
-  - http://build2.corp.convio.com/user/bjonica/my-views/view/Build Feedback Device:
+  - http://path/to/jenkins/view/or/job:
     :devices:
       :passing: A2
       :failing: A1

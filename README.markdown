@@ -85,7 +85,11 @@ If the transmitter is not blinking when you send commands (or netcat doesn't com
 X10 related problems go beyond the scope of this project, so consult another resource for help with x10 configuration.
 
 ### The Software
-Clone this project. First, configure anything you need in ```config/x10_config.yml```. The default settings should work when running on the same computer as mochad. Then, go to the bin/ directory, and run ```ruby update_device.rb URL_TO_JENKINS_JOB_or_VIEW```. That's it, your lights should now have been updated.
+Clone this project.
+
+First, configure anything you need in ```config/x10_config.yml```. The default settings should work when running on the same computer as mochad. Then, go to the bin/ directory, and run ```ruby update_device.rb```. 
+
+That's it, your lights should now have been updated.
 
 #### Other configurations
 Ok that's all fine and good, you say, but how do we *keep* the lights updated? We don't want to have to manually run the script every time a job builds. Onward, I describe how I configured polling and pushing for my project.
@@ -105,11 +109,8 @@ Ok that's all fine and good, you say, but how do we *keep* the lights updated? W
     # number of seconds between each poll
     poll_every=5
 
-    # url of job or view
-    url="http://jenkins/view/or/job/url"
-
     # command to get the status and update the devices"
-    ruby_cmd="ruby update_device.rb $url"
+    ruby_cmd="ruby update_device.rb"
 
     # command to run the above every $poll_every seconds
     watch_cmd="watch -n $poll_every $ruby_cmd"

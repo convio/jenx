@@ -17,7 +17,7 @@
 :hostname: localhost
 
 :urls:
-  - http://path/to/jenkins/view/or/job:
+  - http://jenkins.conviocloud.com/view/COM/job/eCRM-Trunk-junit:
     :devices:
       :passing: A2
       :failing: A1

@@ -79,9 +79,10 @@ if __FILE__ == $0
     exit
   end
 
-  @config = load_config
-  @transmitter = CIComm::X10.new(@config[:devices], @config[:hostname], @config[:hostport], @config[:rf])
-
+  load_config
   build_status = ARGV.first
-  send("on_#{build_status}")
+  @urls.each do |url|
+    @transmitter = CIComm::X10.new(url[:devices], @hostname, @hostport, @rf)
+    send("on_#{build_status}")
+  end
 end

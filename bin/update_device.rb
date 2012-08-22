@@ -31,6 +31,13 @@ end
 
 @urls.each do |url|
   @transmitter = CIComm::X10.new(url[:devices], @hostname, @hostport, @rf)
+  
+  if !ARGV.empty? and ARGV.first =~ /\Aall_off/
+    puts "turning off all lights"
+    @transmitter.all_off
+    break
+  end
+  
   jenkins = CIComm::Jenkins.get_resource(url.keys.first)
 
   if jenkins.is_a? CIComm::Jenkins::Job

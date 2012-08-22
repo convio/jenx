@@ -62,7 +62,7 @@ module CIComm
       x10_open
       @session.puts "#@transmit_cmd #{@device[device_name].join} #{op} #{val}"
       x10_close
-      sleep(1)
+      sleep(0.7)
     end
 
     def x10_open

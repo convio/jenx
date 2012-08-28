@@ -30,7 +30,9 @@ end
 @config = load_config
 
 @urls.each do |url|
+  puts "Processing URL: #{url}"
   @transmitter = CIComm::X10.new(url[:devices], @hostname, @hostport, @rf)
+  @overall_status = nil
   
   if !ARGV.empty? and ARGV.first =~ /\Aall_off/
     puts "turning off all lights"
@@ -47,7 +49,7 @@ end
       true if job.name =~ /Build Feedback Device/ or job.name =~ /\A__/
     end.each do |job|
       current_status = get_status(job)
-      @overall_status = "failing" if current_status !=~ /passing/
+      @overall_status = "failing" if current_status !~ /passing/
       puts "#{current_status.capitalize}:  #{job.name}"
     end
     @overall_status ||= "passing"

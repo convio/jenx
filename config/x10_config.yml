@@ -21,3 +21,8 @@
     :devices:
       :passing: A2
       :failing: A1
+
+  - http://jenkins.conviocloud.com/view/Mordor Patch Build View:
+    :devices:
+      :passing: A3
+      :failing: A4

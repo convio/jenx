@@ -37,7 +37,8 @@ end
   if !ARGV.empty? and ARGV.first =~ /\Aall_off/
     puts "turning off all lights"
     @transmitter.all_off
-    break
+    sleep 0.5
+    next
   end
   
   jenkins = CIComm::Jenkins.get_resource(url.keys.first)

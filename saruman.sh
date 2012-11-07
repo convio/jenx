@@ -1,8 +1,8 @@
 #!/bin/bash
 #[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
+export TERM=xterm
 # we have to cd into the bin directory
-cd $JENX_HOME/bin/
+cd /home/gandalf/isengard/jenx/bin/
 
 # number of seconds to run the script for
 run_for=36000

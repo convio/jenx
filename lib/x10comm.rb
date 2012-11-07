@@ -60,6 +60,7 @@ module CIComm
 
     def x10_send(device_name, op, val="")
       x10_open
+      puts "#@transmit_cmd #{@device[device_name].join} #{op} #{val}"
       @session.puts "#@transmit_cmd #{@device[device_name].join} #{op} #{val}"
       x10_close
       sleep(0.7)
